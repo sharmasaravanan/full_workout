@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7-Day Workout Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --border: #2a2a38;
+    --accent: #e8ff47;
+    --accent2: #ff6b35;
+    --accent3: #47d4ff;
+    --text: #e8e8f0;
+    --muted: #6a6a82;
+    --rest: #3a3a50;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    padding: 60px 24px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .header-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .header-tag::before {
+    content: '';
+    width: 24px;
+    height: 2px;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px, 10vw, 120px);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  h1 span {
+    color: var(--accent);
+    display: block;
+  }
+
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .meta-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 12px;
+    font-family: 'Space Mono', monospace;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .meta-pill.highlight {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* PROGRESS BAR */
+  .progress-section {
+    max-width: 1100px;
+    margin: 0 auto 40px;
+    padding: 0 24px;
+  }
+
+  .progress-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: var(--surface2);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent3));
+    border-radius: 2px;
+    transition: width 0.6s ease;
+  }
+
+  /* DAY TABS */
+  .day-nav {
+    max-width: 1100px;
+    margin: 0 auto 40px;
+    padding: 0 24px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .day-nav::-webkit-scrollbar { display: none; }
+
+  .day-btn {
+    flex-shrink: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    min-width: 72px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .day-btn .day-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    line-height: 1;
+    display: block;
+    color: var(--text);
+  }
+
+  .day-btn .day-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    display: block;
+    margin-top: 4px;
+    color: var(--muted);
+  }
+
+  .day-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .day-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+  }
+
+  .day-btn.active .day-num,
+  .day-btn.active .day-label {
+    color: var(--bg);
+  }
+
+  .day-btn.rest-day { border-color: var(--rest); }
+  .day-btn.rest-day.active {
+    background: var(--rest);
+    border-color: var(--rest);
+    color: var(--text);
+  }
+  .day-btn.rest-day.active .day-num,
+  .day-btn.rest-day.active .day-label { color: var(--text); }
+
+  /* MAIN CONTENT */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  .day-content { display: none; }
+  .day-content.active { display: block; animation: fadeUp 0.35s ease both; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* DAY HEADER */
+  .day-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .day-number-badge {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 100px;
+    line-height: 0.85;
+    color: var(--border);
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  .day-info { flex: 1; }
+
+  .day-type {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+  }
+
+  .day-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .day-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .badge {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-family: 'Space Mono', monospace;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .badge.muscle { border-color: var(--accent2); color: var(--accent2); }
+  .badge.cardio { border-color: var(--accent3); color: var(--accent3); }
+  .badge.recovery { border-color: var(--rest); color: var(--muted); }
+
+  /* SECTION BLOCK */
+  .section-block {
+    margin-bottom: 32px;
+  }
+
+  .section-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* EXERCISE LIST */
+  .exercise-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .exercise-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .exercise-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--border);
+    transition: background 0.2s;
+  }
+
+  .exercise-item:hover { border-color: var(--accent); transform: translateX(4px); }
+  .exercise-item:hover::before { background: var(--accent); }
+  .exercise-item.done { opacity: 0.45; }
+  .exercise-item.done::before { background: #4caf50; }
+
+  .ex-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--border);
+    width: 28px;
+    flex-shrink: 0;
+    text-align: center;
+    transition: color 0.2s;
+  }
+
+  .exercise-item:hover .ex-num { color: var(--accent); }
+
+  .ex-info { flex: 1; }
+
+  .ex-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ex-sets {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  .ex-check {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 12px;
+  }
+
+  .exercise-item.done .ex-check {
+    background: #4caf50;
+    border-color: #4caf50;
+    color: #fff;
+  }
+
+  /* CARDIO BLOCK */
+  .cardio-block {
+    background: linear-gradient(135deg, rgba(71,212,255,0.08), rgba(71,212,255,0.02));
+    border: 1px solid rgba(71,212,255,0.25);
+    border-radius: 14px;
+    padding: 20px 24px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .cardio-icon {
+    font-size: 36px;
+    flex-shrink: 0;
+  }
+
+  .cardio-details { flex: 1; }
+
+  .cardio-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--accent3);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .cardio-spec {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* HIIT CIRCUIT */
+  .hiit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+  }
+
+  .hiit-item {
+    background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(255,107,53,0.03));
+    border: 1px solid rgba(255,107,53,0.25);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .hiit-item:hover { border-color: var(--accent2); transform: scale(1.02); }
+  .hiit-item.done { opacity: 0.4; border-color: #4caf5066; }
+
+  .hiit-item .h-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--accent2);
+    line-height: 1;
+    display: block;
+    margin-top: 6px;
+  }
+
+  /* TIPS BLOCK */
+  .tip-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+
+  .tip-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+  }
+
+  .tip-text { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  /* WORKOUT COMPLETE */
+  .complete-banner {
+    background: linear-gradient(135deg, rgba(232,255,71,0.12), rgba(232,255,71,0.04));
+    border: 1px solid rgba(232,255,71,0.3);
+    border-radius: 14px;
+    padding: 24px;
+    text-align: center;
+    margin-top: 24px;
+    display: none;
+  }
+
+  .complete-banner.show { display: block; animation: fadeUp 0.4s ease; }
+
+  .complete-banner .big { 
+    font-family: 'Bebas Neue', sans-serif; 
+    font-size: 42px; 
+    color: var(--accent); 
+    line-height: 1;
+  }
+
+  .complete-banner p { color: var(--muted); font-size: 14px; margin-top: 8px; }
+
+  /* REST DAY */
+  .rest-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .rest-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .rest-icon { font-size: 28px; flex-shrink: 0; }
+  .rest-text-h { font-weight: 600; margin-bottom: 2px; }
+  .rest-text-p { font-size: 13px; color: var(--muted); }
+
+  /* TIMER */
+  .timer-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 100;
+  }
+
+  .timer-btn {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+    cursor: pointer;
+    box-shadow: 0 4px 24px rgba(232,255,71,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .timer-btn:hover { transform: scale(1.1); box-shadow: 0 6px 32px rgba(232,255,71,0.5); }
+
+  .timer-panel {
+    position: fixed;
+    bottom: 90px;
+    right: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    min-width: 200px;
+    text-align: center;
+    z-index: 100;
+    box-shadow: 0 8px 48px rgba(0,0,0,0.6);
+    display: none;
+  }
+
+  .timer-panel.open { display: block; animation: fadeUp 0.3s ease; }
+
+  .timer-display {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 60px;
+    line-height: 1;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .timer-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  .timer-controls { display: flex; gap: 8px; justify-content: center; margin-top: 16px; }
+
+  .t-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .t-btn:hover { background: var(--border); }
+  .t-btn.primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  .t-btn.primary:hover { filter: brightness(1.1); }
+
+  .timer-presets { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+  .preset-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+  }
+  .preset-btn:hover { color: var(--text); border-color: var(--accent); }
+
+  /* STICKY STATS */
+  .stats-bar {
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    z-index: 50;
+    padding: 12px 24px;
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .stat-val {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-key {
+    font-size: 9px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+  }
+
+  .stats-divider { width: 1px; height: 28px; background: var(--border); }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    header { padding: 40px 16px 24px; }
+    .main, .day-nav, .progress-section { padding-left: 16px; padding-right: 16px; }
+    .day-number-badge { font-size: 60px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-tag">Strength + Fat Loss + Functional Fitness</div>
+  <h1>WEEKLY<span>WORKOUT</span></h1>
+  <div class="header-meta">
+    <span class="meta-pill highlight">7 Days</span>
+    <span class="meta-pill">5 Training Days</span>
+    <span class="meta-pill">1 Active Recovery</span>
+    <span class="meta-pill">1 Full Rest</span>
+  </div>
+</header>
+
+<div class="stats-bar" id="statsBar">
+  <div class="stat-item">
+    <span class="stat-val" id="statDay">Day 1</span>
+    <span class="stat-key">Current</span>
+  </div>
+  <div class="stats-divider"></div>
+  <div class="stat-item">
+    <span class="stat-val" id="statCompleted">0</span>
+    <span class="stat-key">Done Today</span>
+  </div>
+  <div class="stats-divider"></div>
+  <div class="stat-item">
+    <span class="stat-val" id="statTotal">0</span>
+    <span class="stat-key">Total Exercises</span>
+  </div>
+  <div class="stats-divider"></div>
+  <div class="stat-item">
+    <span class="stat-val" id="statPct">0%</span>
+    <span class="stat-key">Progress</span>
+  </div>
+</div>
+
+<div class="progress-section">
+  <div class="progress-label">
+    <span>Today's Progress</span>
+    <span id="progressText">0 / 0</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  </div>
+</div>
+
+<nav class="day-nav" id="dayNav">
+  <button class="day-btn active" onclick="switchDay(0)">
+    <span class="day-num">1</span>
+    <span class="day-label">Push</span>
+  </button>
+  <button class="day-btn" onclick="switchDay(1)">
+    <span class="day-num">2</span>
+    <span class="day-label">Lower</span>
+  </button>
+  <button class="day-btn" onclick="switchDay(2)">
+    <span class="day-num">3</span>
+    <span class="day-label">Zone-2</span>
+  </button>
+  <button class="day-btn" onclick="switchDay(3)">
+    <span class="day-num">4</span>
+    <span class="day-label">Pull</span>
+  </button>
+  <button class="day-btn" onclick="switchDay(4)">
+    <span class="day-num">5</span>
+    <span class="day-label">HIIT</span>
+  </button>
+  <button class="day-btn rest-day" onclick="switchDay(5)">
+    <span class="day-num">6</span>
+    <span class="day-label">Active</span>
+  </button>
+  <button class="day-btn rest-day" onclick="switchDay(6)">
+    <span class="day-num">7</span>
+    <span class="day-label">Rest</span>
+  </button>
+</nav>
+
+<main class="main">
+
+  <!-- DAY 1 -->
+  <div class="day-content active" id="day-0">
+    <div class="day-header">
+      <div class="day-number-badge">01</div>
+      <div class="day-info">
+        <div class="day-type">Training Day</div>
+        <div class="day-title">Upper Push + Cardio</div>
+        <div class="day-badges">
+          <span class="badge muscle">Chest</span>
+          <span class="badge muscle">Shoulders</span>
+          <span class="badge muscle">Triceps</span>
+          <span class="badge cardio">Cardio Finish</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">Strength Work</div>
+      <div class="exercise-list" id="list-0">
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">1</div>
+          <div class="ex-info">
+            <div class="ex-name">Incline Barbell Bench Press</div>
+            <div class="ex-sets">4 × 6–8 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">2</div>
+          <div class="ex-info">
+            <div class="ex-name">Sitting Dumbbell Shoulder Press</div>
+            <div class="ex-sets">3 × 8–10 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">3</div>
+          <div class="ex-info">
+            <div class="ex-name">Flat Dumbbell Press</div>
+            <div class="ex-sets">3 × 8–10 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">4</div>
+          <div class="ex-info">
+            <div class="ex-name">Lean-Away Lateral Raise</div>
+            <div class="ex-sets">3 × 12–15 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">5</div>
+          <div class="ex-info">
+            <div class="ex-name">Seated Decline Cable Fly</div>
+            <div class="ex-sets">3 × 12–15 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">6</div>
+          <div class="ex-info">
+            <div class="ex-name">Incline DB Overhead Extension</div>
+            <div class="ex-sets">3 × 10–12 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">7</div>
+          <div class="ex-info">
+            <div class="ex-name">Manual Dips</div>
+            <div class="ex-sets">2 × AMRAP</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">Cardio Finish</div>
+      <div class="cardio-block">
+        <div class="cardio-icon">🚶</div>
+        <div class="cardio-details">
+          <div class="cardio-name">Incline Treadmill Walk</div>
+          <div class="cardio-spec">20 min · 6–8% incline · steady pace</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="complete-banner" id="complete-0">
+      <div class="big">🔥 DAY 1 DONE!</div>
+      <p>Upper push complete. Time to recover and grow.</p>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day-content" id="day-1">
+    <div class="day-header">
+      <div class="day-number-badge">02</div>
+      <div class="day-info">
+        <div class="day-type">Training Day</div>
+        <div class="day-title">Lower Body + Core</div>
+        <div class="day-badges">
+          <span class="badge muscle">Quads</span>
+          <span class="badge muscle">Hamstrings</span>
+          <span class="badge muscle">Glutes</span>
+          <span class="badge muscle">Core</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">Lower Body</div>
+      <div class="exercise-list" id="list-1">
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">1</div>
+          <div class="ex-info">
+            <div class="ex-name">Back Squat</div>
+            <div class="ex-sets">4 × 5–6 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">2</div>
+          <div class="ex-info">
+            <div class="ex-name">Romanian Deadlift</div>
+            <div class="ex-sets">4 × 6–8 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">3</div>
+          <div class="ex-info">
+            <div class="ex-name">Walking Lunges</div>
+            <div class="ex-sets">3 × 8 reps/leg</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">4</div>
+          <div class="ex-info">
+            <div class="ex-name">Glute Ham Raise</div>
+            <div class="ex-sets">3 × 8–10 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">5</div>
+          <div class="ex-info">
+            <div class="ex-name">Prone Leg Curl</div>
+            <div class="ex-sets">3 × 10–12 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">6</div>
+          <div class="ex-info">
+            <div class="ex-name">KB Swings</div>
+            <div class="ex-sets">4 × 12–15 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">Core Block</div>
+      <div class="exercise-list">
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">A</div>
+          <div class="ex-info">
+            <div class="ex-name">Plank</div>
+            <div class="ex-sets">3 × 45–60 sec</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">B</div>
+          <div class="ex-info">
+            <div class="ex-name">Leg Raises</div>
+            <div class="ex-sets">3 × 12–15 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">C</div>
+          <div class="ex-info">
+            <div class="ex-name">Russian Twists</div>
+            <div class="ex-sets">3 × 20 reps (10/side)</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+      </div>
+    </div>
+    <div class="complete-banner" id="complete-1">
+      <div class="big">💪 DAY 2 DONE!</div>
+      <p>Legs and core crushed. Rest up!</p>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day-content" id="day-2">
+    <div class="day-header">
+      <div class="day-number-badge">03</div>
+      <div class="day-info">
+        <div class="day-type">Active Day</div>
+        <div class="day-title">Zone-2 Cardio + Stability</div>
+        <div class="day-badges">
+          <span class="badge cardio">Aerobic Base</span>
+          <span class="badge muscle">Stability</span>
+          <span class="badge muscle">Core</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">Zone-2 Cardio</div>
+      <div class="cardio-block">
+        <div class="cardio-icon">🚴</div>
+        <div class="cardio-details">
+          <div class="cardio-name">Brisk Walk / Cycling</div>
+          <div class="cardio-spec">30–40 min · conversational pace · zone 2 heart rate</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">Stability & Core</div>
+      <div class="exercise-list" id="list-2">
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">1</div>
+          <div class="ex-info">
+            <div class="ex-name">Copenhagen Plank</div>
+            <div class="ex-sets">2 × 20–30 sec/side</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">2</div>
+          <div class="ex-info">
+            <div class="ex-name">Single-Leg Hold</div>
+            <div class="ex-sets">2 × 30–40 sec/leg</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">3</div>
+          <div class="ex-info">
+            <div class="ex-name">Half-Kneeling Overhead Press</div>
+            <div class="ex-sets">2 × 10 reps/arm</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">4</div>
+          <div class="ex-info">
+            <div class="ex-name">Bird Dogs</div>
+            <div class="ex-sets">2 × 8 reps/side</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">5</div>
+          <div class="ex-info">
+            <div class="ex-name">Dead Bug</div>
+            <div class="ex-sets">2 × 8–10 reps/side</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">6</div>
+          <div class="ex-info">
+            <div class="ex-name">Single-Arm Farmer Carry</div>
+            <div class="ex-sets">2 × 20–30 m/arm</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">7</div>
+          <div class="ex-info">
+            <div class="ex-name">KB Swings</div>
+            <div class="ex-sets">2 × 12–15 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+      </div>
+    </div>
+    <div class="complete-banner" id="complete-2">
+      <div class="big">✅ DAY 3 DONE!</div>
+      <p>Stability and aerobic base built. Great work.</p>
+    </div>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day-content" id="day-3">
+    <div class="day-header">
+      <div class="day-number-badge">04</div>
+      <div class="day-info">
+        <div class="day-type">Training Day</div>
+        <div class="day-title">Upper Pull + Cardio</div>
+        <div class="day-badges">
+          <span class="badge muscle">Back</span>
+          <span class="badge muscle">Biceps</span>
+          <span class="badge muscle">Rear Delts</span>
+          <span class="badge cardio">Cardio Finish</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">Pulling Movements</div>
+      <div class="exercise-list" id="list-3">
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">1</div>
+          <div class="ex-info">
+            <div class="ex-name">Pull-Ups</div>
+            <div class="ex-sets">4 × AMRAP</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">2</div>
+          <div class="ex-info">
+            <div class="ex-name">Barbell Row</div>
+            <div class="ex-sets">4 × 6–8 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">3</div>
+          <div class="ex-info">
+            <div class="ex-name">Reverse-Grip Lat Pulldown</div>
+            <div class="ex-sets">3 × 8–10 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">4</div>
+          <div class="ex-info">
+            <div class="ex-name">Rear Delt Row</div>
+            <div class="ex-sets">3 × 12 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">5</div>
+          <div class="ex-info">
+            <div class="ex-name">Narrow Grip Barbell Curl</div>
+            <div class="ex-sets">3 × 10–12 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">6</div>
+          <div class="ex-info">
+            <div class="ex-name">Face Pulls</div>
+            <div class="ex-sets">3 × 12–15 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">7</div>
+          <div class="ex-info">
+            <div class="ex-name">Lying Face Pulls</div>
+            <div class="ex-sets">3 × 12–15 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">Cardio Finish</div>
+      <div class="cardio-block">
+        <div class="cardio-icon">🏃</div>
+        <div class="cardio-details">
+          <div class="cardio-name">Treadmill / Outdoor Intervals</div>
+          <div class="cardio-spec">15–20 min · 2 min walk + 3 min run × 3 rounds</div>
+        </div>
+      </div>
+    </div>
+    <div class="complete-banner" id="complete-3">
+      <div class="big">🦾 DAY 4 DONE!</div>
+      <p>Back and biceps locked in. Keep the momentum!</p>
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day-content" id="day-4">
+    <div class="day-header">
+      <div class="day-number-badge">05</div>
+      <div class="day-info">
+        <div class="day-type">Training Day</div>
+        <div class="day-title">Full Body + HIIT</div>
+        <div class="day-badges">
+          <span class="badge muscle">Full Body</span>
+          <span class="badge cardio">HIIT Circuit</span>
+          <span class="badge muscle">Biceps</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">Strength Work — 3–4 Sets · 6–10 Reps</div>
+      <div class="exercise-list" id="list-4">
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">1</div>
+          <div class="ex-info">
+            <div class="ex-name">Back Squat / Goblet Squat</div>
+            <div class="ex-sets">3–4 × 6–10 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">2</div>
+          <div class="ex-info">
+            <div class="ex-name">Romanian Deadlift</div>
+            <div class="ex-sets">3–4 × 6–10 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">3</div>
+          <div class="ex-info">
+            <div class="ex-name">Incline Dumbbell Press</div>
+            <div class="ex-sets">3–4 × 6–10 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">4</div>
+          <div class="ex-info">
+            <div class="ex-name">Pull-Ups / Lat Pulldown</div>
+            <div class="ex-sets">3–4 × 6–10 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">5</div>
+          <div class="ex-info">
+            <div class="ex-name">Dumbbell Shoulder Press</div>
+            <div class="ex-sets">3–4 × 6–10 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">6</div>
+          <div class="ex-info">
+            <div class="ex-name">Walking Lunges</div>
+            <div class="ex-sets">3–4 × 6–10 reps/leg</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+        <div class="exercise-item" onclick="toggleEx(this)">
+          <div class="ex-num">7</div>
+          <div class="ex-info">
+            <div class="ex-name">Hanging Leg Raises</div>
+            <div class="ex-sets">3–4 × 6–10 reps</div>
+          </div>
+          <div class="ex-check">✓</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <div class="section-title">HIIT Circuit — 4 Rounds</div>
+      <div class="tip-block" style="margin-bottom:16px;">
+        <div class="tip-label">Instructions</div>
+        <div class="tip-text">Perform all 6 exercises back-to-back with minimal rest. Rest 30–60 sec between full rounds. Click to mark complete.</div>
+      </div>
+      <div class="hiit-grid" id="hiit-grid">
+        <div class="hiit-item" onclick="toggleHiit(this)">
+          Burpees
+          <span class="h-time">30s</span>
+        </div>
+        <div class="hiit-item" onclick="toggleHiit(this)">
+          Jump Squats
+          <span class="h-time">30s</span>
+        </div>
+        <div class="hiit-item" onclick="toggleHiit(this)">
+          Mountain Climbers
+          <span class="h-time">30s</span>
+        </div>
+        <div class="hiit-item" onclick="toggleHiit(this)">
+          High Knees
+          <span class="h-time">30s</span>
+        </div>
+        <div class="hiit-item" onclick="toggleHiit(this)">
+          Push-Ups
+          <span class="h-time">30s</span>
+        </div>
+        <div class="hiit-item" onclick="toggleHiit(this)">
+          KB Swings
+          <span class="h-time">20 reps</span>
+        </div>
+      </div>
+    </div>
+    <div class="complete-banner" id="complete-4">
+      <div class="big">⚡ DAY 5 DONE!</div>
+      <p>Full body + HIIT? You're an absolute machine.</p>
+    </div>
+  </div>
+
+  <!-- DAY 6 -->
+  <div class="day-content" id="day-5">
+    <div class="day-header">
+      <div class="day-number-badge">06</div>
+      <div class="day-info">
+        <div class="day-type">Recovery Day</div>
+        <div class="day-title">Active Recovery</div>
+        <div class="day-badges">
+          <span class="badge recovery">Low Intensity</span>
+          <span class="badge recovery">Mobility</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rest-content">
+      <div class="rest-item">
+        <div class="rest-icon">🚶</div>
+        <div>
+          <div class="rest-text-h">Light Walking</div>
+          <div class="rest-text-p">30–60 min easy walk. Keep it relaxed — this is active recovery, not training.</div>
+        </div>
+      </div>
+      <div class="rest-item">
+        <div class="rest-icon">🚴</div>
+        <div>
+          <div class="rest-text-h">Optional: Easy Cycling / Incline Walk</div>
+          <div class="rest-text-p">Only if you feel good. Light movement to flush out soreness.</div>
+        </div>
+      </div>
+      <div class="rest-item">
+        <div class="rest-icon">🧘</div>
+        <div>
+          <div class="rest-text-h">Full Body Stretching</div>
+          <div class="rest-text-p">Hamstrings · Hips · Lower back · Shoulders — hold each stretch 30–60 sec.</div>
+        </div>
+      </div>
+      <div class="rest-item">
+        <div class="rest-icon">🧻</div>
+        <div>
+          <div class="rest-text-h">Foam Rolling (optional)</div>
+          <div class="rest-text-p">Roll major muscle groups worked this week. Focus on tight spots.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 7 -->
+  <div class="day-content" id="day-6">
+    <div class="day-header">
+      <div class="day-number-badge">07</div>
+      <div class="day-info">
+        <div class="day-type">Rest Day</div>
+        <div class="day-title">Full Rest</div>
+        <div class="day-badges">
+          <span class="badge recovery">No Lifting</span>
+          <span class="badge recovery">No HIIT</span>
+          <span class="badge recovery">Recover</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rest-content">
+      <div class="rest-item">
+        <div class="rest-icon">😴</div>
+        <div>
+          <div class="rest-text-h">Prioritize Sleep</div>
+          <div class="rest-text-p">7–9 hours. Muscle grows during recovery, not during training.</div>
+        </div>
+      </div>
+      <div class="rest-item">
+        <div class="rest-icon">💧</div>
+        <div>
+          <div class="rest-text-h">Stay Hydrated</div>
+          <div class="rest-text-p">Aim for 2.5–3L of water. Replenish electrolytes if needed.</div>
+        </div>
+      </div>
+      <div class="rest-item">
+        <div class="rest-icon">🥗</div>
+        <div>
+          <div class="rest-text-h">Nail Your Nutrition</div>
+          <div class="rest-text-p">Hit protein goals (0.8–1g/lb bodyweight). Focus on whole foods and recovery meals.</div>
+        </div>
+      </div>
+      <div class="rest-item">
+        <div class="rest-icon">🤸</div>
+        <div>
+          <div class="rest-text-h">Light Mobility (Optional)</div>
+          <div class="rest-text-p">10–15 min gentle mobility work only if you feel the urge. No intensity.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-block" style="margin-top:24px;">
+      <div class="tip-label">Progression Rule</div>
+      <div class="tip-text">If you hit all reps comfortably last week → increase weight or add 1–2 reps next week. Small consistent gains compound over time.</div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Timer FAB -->
+<div class="timer-fab">
+  <button class="timer-btn" onclick="toggleTimer()" title="Rest Timer">⏱</button>
+</div>
+
+<div class="timer-panel" id="timerPanel">
+  <div class="timer-label">Rest Timer</div>
+  <div class="timer-display" id="timerDisplay">1:30</div>
+  <div class="timer-presets">
+    <button class="preset-btn" onclick="setTimer(60)">1:00</button>
+    <button class="preset-btn" onclick="setTimer(90)">1:30</button>
+    <button class="preset-btn" onclick="setTimer(120)">2:00</button>
+    <button class="preset-btn" onclick="setTimer(180)">3:00</button>
+  </div>
+  <div class="timer-controls">
+    <button class="t-btn primary" id="startBtn" onclick="startPause()">Start</button>
+    <button class="t-btn" onclick="resetTimer()">Reset</button>
+  </div>
+</div>
+
+<script>
+  let currentDay = 0;
+  let timerSeconds = 90;
+  let timerRunning = false;
+  let timerInterval = null;
+  let timerInitial = 90;
+
+  // State per day: track checked exercises
+  const state = {};
+
+  function switchDay(idx) {
+    document.querySelectorAll('.day-content').forEach((el, i) => {
+      el.classList.toggle('active', i === idx);
+    });
+    document.querySelectorAll('.day-btn').forEach((btn, i) => {
+      btn.classList.toggle('active', i === idx);
+    });
+    currentDay = idx;
+    updateStats();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    const dayNames = ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7'];
+    document.getElementById('statDay').textContent = dayNames[idx];
+  }
+
+  function toggleEx(el) {
+    el.classList.toggle('done');
+    updateStats();
+    checkComplete();
+  }
+
+  function toggleHiit(el) {
+    el.classList.toggle('done');
+    updateStats();
+    checkComplete();
+  }
+
+  function getExercisesForDay(dayIdx) {
+    const dayEl = document.getElementById('day-' + dayIdx);
+    if (!dayEl) return { done: 0, total: 0 };
+    const items = dayEl.querySelectorAll('.exercise-item, .hiit-item');
+    let done = 0;
+    items.forEach(i => { if (i.classList.contains('done')) done++; });
+    return { done, total: items.length };
+  }
+
+  function updateStats() {
+    const { done, total } = getExercisesForDay(currentDay);
+    document.getElementById('statCompleted').textContent = done;
+    document.getElementById('statTotal').textContent = total;
+    const pct = total > 0 ? Math.round(done / total * 100) : 0;
+    document.getElementById('statPct').textContent = pct + '%';
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = done + ' / ' + total;
+  }
+
+  function checkComplete() {
+    const { done, total } = getExercisesForDay(currentDay);
+    const banner = document.getElementById('complete-' + currentDay);
+    if (banner && total > 0 && done === total) {
+      banner.classList.add('show');
+      banner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } else if (banner) {
+      banner.classList.remove('show');
+    }
+  }
+
+  // Timer
+  function toggleTimer() {
+    const panel = document.getElementById('timerPanel');
+    panel.classList.toggle('open');
+  }
+
+  function updateTimerDisplay() {
+    const m = Math.floor(timerSeconds / 60);
+    const s = timerSeconds % 60;
+    document.getElementById('timerDisplay').textContent = m + ':' + String(s).padStart(2, '0');
+  }
+
+  function setTimer(secs) {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    timerSeconds = secs;
+    timerInitial = secs;
+    document.getElementById('startBtn').textContent = 'Start';
+    document.getElementById('timerDisplay').style.color = 'var(--accent)';
+    updateTimerDisplay();
+  }
+
+  function startPause() {
+    if (timerRunning) {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      document.getElementById('startBtn').textContent = 'Resume';
+    } else {
+      if (timerSeconds <= 0) { resetTimer(); return; }
+      timerRunning = true;
+      document.getElementById('startBtn').textContent = 'Pause';
+      timerInterval = setInterval(() => {
+        timerSeconds--;
+        updateTimerDisplay();
+        if (timerSeconds <= 0) {
+          clearInterval(timerInterval);
+          timerRunning = false;
+          document.getElementById('startBtn').textContent = 'Start';
+          document.getElementById('timerDisplay').style.color = 'var(--accent2)';
+          // Beep via AudioContext
+          try {
+            const ctx = new AudioContext();
+            [0, 0.15, 0.3].forEach(t => {
+              const o = ctx.createOscillator();
+              const g = ctx.createGain();
+              o.connect(g); g.connect(ctx.destination);
+              o.frequency.value = 880;
+              g.gain.setValueAtTime(0.3, ctx.currentTime + t);
+              g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + 0.12);
+              o.start(ctx.currentTime + t);
+              o.stop(ctx.currentTime + t + 0.13);
+            });
+          } catch(e) {}
+        }
+      }, 1000);
+    }
+  }
+
+  function resetTimer() {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    timerSeconds = timerInitial;
+    document.getElementById('startBtn').textContent = 'Start';
+    document.getElementById('timerDisplay').style.color = 'var(--accent)';
+    updateTimerDisplay();
+  }
+
+  // Init
+  updateTimerDisplay();
+  updateStats();
+</script>
+</body>
+</html>
